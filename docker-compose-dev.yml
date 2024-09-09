@@ -18,12 +18,12 @@ services:
   
   backend:
     container_name: backend_binary
-    build: ./Backend/
+    build: ./backend/
     restart: always
     volumes:
       #- ./Backend/src:/app/src
-      - ./Backend:/app #apenas para desenvolvimento (evitar recriar a imagem ao modificar o código fonte)
-      - ./Backend/prisma:/app/prisma
+      - ./backend:/app #apenas para desenvolvimento (evitar recriar a imagem ao modificar o código fonte)
+      - ./backend/prisma:/app/prisma
     networks:
       - rede_binary
     ports:
@@ -36,7 +36,7 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "npx prisma generate && npm run deploy && npm start"
+      sh -c "npm start"
   
   frontend:
     container_name: frontend_binary
