@@ -52,6 +52,7 @@ services:
     depends_on:
       - db
       - backend
+    command: npm start
 
 networks:
   rede_binary:

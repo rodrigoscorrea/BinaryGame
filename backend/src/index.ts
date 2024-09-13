@@ -1,15 +1,26 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
+
+import validateEnv from "./utils/validateEnv";
+import router from "./router/app_router";
 
 dotenv.config();
+validateEnv();
 
 const app = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT ?? 4466;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+app.use(express.json());
+app.use(router);
+
+app.listen(PORT, () => {
+  console.log(`server runing on ${PORT}`);
 });
