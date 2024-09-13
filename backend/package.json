@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/index.ts",
-    "deploy":  "docker exec -it backend_binary npx prisma migrate deploy",
-    "migrate": "docker exec -it backend_binary npx prisma migrate dev --name",
-    "populate": "docker exec -it backend_binary npx ts-node src/utils/populatePrisma.ts",
-    "generate": "docker exec -it backend_binary npx prisma generate"
+    "deploy": "npx prisma migrate deploy",
+    "migrate": "npx prisma migrate dev --name",
+    "populate": "npx ts-node src/utils/populatePrisma.ts",
+    "generate": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

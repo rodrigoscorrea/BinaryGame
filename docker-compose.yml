@@ -36,7 +36,7 @@ services:
     depends_on:
       - db
     command: >
-      sh -c "npx prisma generate && npm start"
+      sh -c "npx prisma generate && npm run deploy && npm run populate && npm start"
   
   frontend:
     container_name: frontend_binary
@@ -52,7 +52,7 @@ services:
     depends_on:
       - db
       - backend
-    command: npm start
+
 
 networks:
   rede_binary:
