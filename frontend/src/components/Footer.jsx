@@ -6,7 +6,7 @@ function Footer(){
             {/* Rodapé com agradecimentos */}
             <div className="row mt-5" style={{backgroundColor: "rgba(217,217,217,0.5)"}}>
                 <div className="col text-center">
-                <p className="mt-1 text-center">Agradecimentos</p>
+                <p className="mt-1 text-center">Oferecimento</p>
                 <div className="mb-3 d-flex justify-content-around">
                     <img 
                     src="/logo_icomp.png" 
