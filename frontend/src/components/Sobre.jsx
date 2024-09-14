@@ -31,7 +31,7 @@ const Sobre = () => {
       {/*Membros + Orientador*/}
       <div className="row my-5">
         <div className="col-md-6">
-          <h3 className="mb-4" style={{ color: "#023E8A" }}>
+          <h3 className="mb-2" style={{ color: "#023E8A" }}>
             Membros
           </h3>
           <ul className="list-unstyled">
@@ -49,7 +49,7 @@ const Sobre = () => {
             </li>
             
           </ul>
-          <h3 className="mt-4 mb-4" style={{ color: "#023E8A" }}>
+          <h3 className="mt-4 mb-2" style={{ color: "#023E8A" }}>
             Orientador
           </h3>
           <ul className="list-unstyled">
