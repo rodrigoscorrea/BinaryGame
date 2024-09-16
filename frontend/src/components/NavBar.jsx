@@ -5,7 +5,7 @@ function NavBar () {
         <nav className="navbar navbar-expand-lg" style={{backgroundColor: "#365EEC"}}>
         <div className="container-fluid">
           <div className="navbar-brand">
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+            <Link to="/" style={{ color: "white", textDecoration: "none", fontSize: "1.5em"}}>
               Binary Game <i className="bi bi-graph-up-arrow"></i>
             </Link>
           </div>

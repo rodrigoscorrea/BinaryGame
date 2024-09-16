@@ -78,17 +78,27 @@ function Game() {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                O objetivo deste jogo é descobrir a palavra correta com base nos códigos binários fornecidos.
-                Cada letra corresponde a um número binário de 5 bits. Insira as letras correspondentes 
-                nos campos e veja se a palavra está correta. Por exemplo, o código "00001" corresponde à letra "A".
-                Tente completar a palavra corretamente para vencer o jogo!
-              </div>
+                <h5>Como converter um número binário para decimal?</h5>
+                <p>
+                  Imagine que o sistema binário é como um jogo de luzes, onde cada luz pode estar ligada ou desligada. 
+                  No mundo dos números binários, temos apenas dois dígitos: 0 e 1. O 0 significa que a luz está desligada, 
+                  e o 1 significa que a luz está ligada.
+                </p>
+                <p>
+                  Agora, pense que cada posição de um número binário tem um valor diferente, como se fosse uma fila de potes. 
+                  Cada pote na fila pode multiplicar seu valor por um número, começando do 1 e depois indo para 2, 4, 8, 16, e assim 
+                  por diante (essas são as "potências de 2"). Vamos ver isso com um exemplo:
+                </p>
+                <p><strong>Exemplo:</strong></p>
+                <img src="binario.png" alt="exemploBinario"/>
+              </div> 
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
               </div>
             </div>
           </div>
         </div>
+        
 
         {/* Tabela de letras e números */}
         <div className="row justify-content-center">
