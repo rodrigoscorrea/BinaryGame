@@ -1,0 +1,24 @@
+.landing-container {
+    background-color: rgba(173, 216, 230, 0.3); /* Azul claro com opacidade */
+    background-image: url('../../../public/binary_cpu.jpg');
+    opacity: 0.3;
+
+    border-radius: 15px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno para melhor visualização */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve para dar destaque */
+}
+
+.landing-container2 {
+    background-image: url('../../../public/binary_cpu.jpg');
+    opacity: 0.3;
+    border-radius: 15px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno para melhor visualização */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve para dar destaque */
+}
+
+/* Estilos adicionais para garantir que tudo se encaixe bem */
+.row {
+    margin: 0 auto; /* Alinhamento automático para centralizar no espaço do container */
+}
+
+

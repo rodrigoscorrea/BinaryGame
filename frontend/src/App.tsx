@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import Avaliacao from './components/Avaliacao';
 import Sobre from './components/Sobre';
 import Game from './components/Game';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App() {
   return (

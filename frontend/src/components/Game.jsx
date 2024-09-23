@@ -6,14 +6,22 @@ function Game() {
   const [palavraAleatoria, setPalavraAleatoria] = useState("");
   const [respostaUsuario, setRespostaUsuario] = useState([]);
   const [mensagem, setMensagem] = useState("");
+  const [jogoFinalizado, setJogoFinalizado] = useState(false);
 
   useEffect(() => {
+    carregarNovaPalavra();
+  }, []);
+
+  const carregarNovaPalavra = () => {
     getPalavras().then((response) => {
       setPalavras(response);
       const randomIndex = Math.floor(Math.random() * response.length);
       setPalavraAleatoria(response[randomIndex].palavra);
+      setRespostaUsuario([]); // Limpa a resposta do usuário
+      setMensagem(""); // Reseta a mensagem
+      setJogoFinalizado(false); // Reseta o status do jogo
     });
-  }, []);
+  };
 
   const letraParaBinario = (letra) => {
     const tabela = {
@@ -45,6 +53,7 @@ function Game() {
   const verificarResposta = (resposta) => {
     if (resposta.join("") === palavraAleatoria.toUpperCase()) {
       setMensagem("Parabéns! Você acertou!");
+      setJogoFinalizado(true);
     } else {
       setMensagem("Tente novamente! A palavra estava incorreta.");
     }
@@ -53,7 +62,7 @@ function Game() {
   return (
     <div className="mt-3">
       <div className="mx-3">
-        {/* Adicionando o título e o objetivo do jogo */}
+        {/* Título e objetivo do jogo */}
         <h3>Objetivo do jogo</h3>
         <p>
           O objetivo do jogo é adivinhar a palavra secreta, convertendo as letras de uma palavra aleatória para o código binário correspondente. 
@@ -62,14 +71,13 @@ function Game() {
       </div>
       
       <div className="container text-center mt-5">
-        {/* Ícone de ajuda */}
+        {/* Modal de ajuda */}
         <div className="d-flex justify-content-end">
           <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#helpModal">
             <i className="bi bi-question-circle-fill" style={{ fontSize: '1.5rem' }}></i>
           </button>
         </div>
 
-        {/* Modal de ajuda */}
         <div className="modal fade" id="helpModal" tabIndex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
@@ -98,7 +106,6 @@ function Game() {
             </div>
           </div>
         </div>
-        
 
         {/* Tabela de letras e números */}
         <div className="row justify-content-center">
@@ -125,7 +132,6 @@ function Game() {
           <div className="col text-center">
             {palavraBinario.length > 0 ? (
               <div>
-
                 {/* Inputs para o usuário digitar a palavra */}
                 <div className="d-flex justify-content-around mt-3">
                   {palavraAleatoria.split("").map((_, index) => (
@@ -156,9 +162,15 @@ function Game() {
             )}
           </div>
         </div>
+
+        {/* Botão de controle de jogo */}
+        <div className="mt-4">
+          <button className="btn btn-primary" onClick={carregarNovaPalavra}>
+            {jogoFinalizado ? "Próxima palavra" : "Tentar outra palavra"}
+          </button>
+        </div>
       </div>
     </div>
-    
   );
 }
 
