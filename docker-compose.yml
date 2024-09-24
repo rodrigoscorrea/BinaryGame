@@ -29,7 +29,7 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     environment:
-      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}
+      - DATABASE_URL=mysql://root:${MYSQL_PASSWORD}@db/${MYSQL_DATABASE}
       - DEFAULT_LANG=${DEFAULT_LANG}
       - NODE_ENV=${NODE_ENV}
       - PORT=${BACKEND_PORT}

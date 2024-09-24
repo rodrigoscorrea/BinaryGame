@@ -1,5 +1,5 @@
 import { PrismaClient, Word } from '@prisma/client';
-import { createWord } from '../resources/palavra/palavra.services';
+import { createWord, getWords } from '../resources/palavra/palavra.services';
 const prisma = new PrismaClient();
 
 const palavras = [
@@ -7,8 +7,18 @@ const palavras = [
 ]
 
 async function main() {
+
+  //Popula apenas se não estiver no banco
+  const palavrasNoBancoBruta = await getWords();
+  const palavrasFiltradas = []
+  
+  for(let palavraBruta of palavrasNoBancoBruta!){
+    palavrasFiltradas.push(palavraBruta.palavra);
+  }
   for(let palavra of palavras){
-    await createWord({palavra}); 
+    if(!palavrasFiltradas.includes(palavra)){
+      await createWord({palavra: palavra});
+    }
   }
 
   console.log("Banco de dados populado com sucesso!");

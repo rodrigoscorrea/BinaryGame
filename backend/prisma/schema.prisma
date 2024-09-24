@@ -18,3 +18,13 @@ model Word {
   id    String     @id @default(uuid())
   palavra String   @db.VarChar(30)
 }
+
+model Smeq {
+  id    String    @id @default(uuid())
+  nomeParticipante  String  @db.VarChar(100)
+  score Int
+  comentario String? @db.VarChar(200)
+
+  @@map("smeq")
+}
+
