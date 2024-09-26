@@ -1,46 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./LandingPage.css"; // Certifique-se de criar e importar o CSS
 
 function LandingPage() {
-
     return (
-        <div className="container text-center">
-            {/* Explicação e cabeçalho */}
-            <div className="row">
-                <div className="col mt-5">
-                    <h1 className="display-4">Descubra o Mundo dos Números Binários!</h1>
-                    <p className="lead mt-3">
-                        Explore, aprenda e divirta-se com o poder do sistema binário.
-                        Você consegue converter números e resolver desafios? Vamos ver!
-                    </p>
+        <div className="container-fluid landing-page-container">
+            <div className="overlay">
+                {/* Explicação e cabeçalho */}
+                <div className="row">
+                    <div className="col mt-5">
+                        <h1 className="display-4 text-light">Descubra o Mundo dos Números Binários!</h1>
+                        <p className="lead mt-3 text-light">
+                            Explore, aprenda e divirta-se com o poder do sistema binário.
+                            Você consegue converter números e resolver desafios? Vamos ver!
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            {/* Imagem ou gráfico visual */}
-            <div className="row">
-                <div className="col">
-                    <img src='binary_cpu.jpg' alt="Binário em ação" className="img-fluid mt-4" style={{maxHeight: "300px"}} />
+                {/* Link para mais informações */}
+                <div className="row">
+                    <div className="col mt-5">
+                        <p className="text-light">Curioso sobre o que são números binários?</p>
+                    </div>
                 </div>
-            </div>
 
-            {/* Link para mais informações */}
-            <div className="row">
-                <div className="col mt-5">
-                    <p>Curioso sobre o que são números binários?</p>
+                {/* Botão de jogar */}
+                <div className="row">
+                    <div className="col">
+                        <Link className="btn btn-warning btn-lg mt-4" to={"/game"}>
+                            Jogue agora e aprenda brincando!
+                        </Link>
+                    </div>
                 </div>
             </div>
-
-            {/* Botão de jogar */}
-            <div className="row">
-                <div className="col">
-                    <Link className="btn btn-warning btn-lg mt-4" to={"/game"}>
-                        Jogue agora e aprenda brincando!
-                    </Link>
-                </div>
-            </div>
-            
         </div>
-    )
+    );
 }
 
 export default LandingPage;

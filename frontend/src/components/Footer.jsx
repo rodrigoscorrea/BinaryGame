@@ -5,7 +5,7 @@ function Footer() {
   return (
     <>
       {/* Rodapé fixado ao fundo da página */}
-      <div className="row fixed-bottom" style={{ backgroundColor: "rgba(217,217,217,0.5)" }}>
+      <div className="row " style={{ backgroundColor: "rgba(217,217,217,0.5)" }}>
         <div className="col text-center">
           {/* Alinhamento vertical com flexbox */}
           <p className="mb-2 text-center">Oferecimento</p>
