@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPalavras } from "../services/api";
+import Modal from 'react-bootstrap/Modal';
 
 function Game() {
   const [palavras, setPalavras] = useState([]);
@@ -7,7 +8,10 @@ function Game() {
   const [respostaUsuario, setRespostaUsuario] = useState([]);
   const [mensagem, setMensagem] = useState("");
   const [jogoFinalizado, setJogoFinalizado] = useState(false);
-
+  const [faseAtual, setFaseAtual] = useState(0); // Estado para acompanhar a fase atual
+  const [progressoFases, setProgressoFases] = useState([false, false, false, false, false]); // Estado para acompanhar o progresso das fases
+  const [showModal, setShowModal] = useState(false);
+  const [indexPalavra, setIndexPalavra] = useState(0);
   useEffect(() => {
     carregarNovaPalavra();
   }, []);
@@ -15,8 +19,8 @@ function Game() {
   const carregarNovaPalavra = () => {
     getPalavras().then((response) => {
       setPalavras(response);
-      const randomIndex = Math.floor(Math.random() * response.length);
-      setPalavraAleatoria(response[randomIndex].palavra);
+      setPalavraAleatoria(response[indexPalavra].palavra);
+      setIndexPalavra(indexPalavra + 1);
       setRespostaUsuario([]); // Limpa a resposta do usuário
       setMensagem(""); // Reseta a mensagem
       setJogoFinalizado(false); // Reseta o status do jogo
@@ -54,9 +58,31 @@ function Game() {
     if (resposta.join("") === palavraAleatoria.toUpperCase()) {
       setMensagem("Parabéns! Você acertou!");
       setJogoFinalizado(true);
+
+      // Atualiza o progresso das fases
+      const novoProgresso = [...progressoFases];
+      novoProgresso[faseAtual] = true; // Marca a fase atual como concluída
+      setProgressoFases(novoProgresso);
+
+      // Avança para a próxima fase
+      setFaseAtual(faseAtual + 1);
+
+      // Se todas as fases foram concluídas, exibe o modal de parabéns
+      if (faseAtual === 4) {
+        setIndexPalavra(0);
+        setShowModal(true);
+        resetarTentativa();
+        
+      }
     } else {
       setMensagem("Tente novamente! A palavra estava incorreta.");
     }
+  };
+
+  const resetarTentativa = () => {
+    setFaseAtual(0); // Reseta a fase atual
+    setProgressoFases([false, false, false, false, false]); // Reseta o progresso das fases
+    carregarNovaPalavra(); // Carrega uma nova palavra
   };
 
   return (
@@ -69,8 +95,29 @@ function Game() {
           Cada letra tem seu próprio valor binário de 5 bits. Preencha os campos com as letras corretas para completar a palavra.
         </p>
       </div>
-      
+
       <div className="container text-center mt-5">
+
+        {/* Tabela de letras e números */}
+        <div className="row justify-content-center">
+          <table className="table-bordered">
+            <tbody>
+              <tr style={{ backgroundColor: "rgba(255, 177, 12, 0.6)" }}>
+                <td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td>
+              </tr>
+              <tr>
+                <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
+              </tr>
+              <tr style={{ backgroundColor: "rgba(255, 177, 12, 0.6)" }}>
+                <td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td>
+              </tr>
+              <tr>
+                <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         {/* Modal de ajuda */}
         <div className="d-flex justify-content-end">
           <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#helpModal">
@@ -105,26 +152,6 @@ function Game() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Tabela de letras e números */}
-        <div className="row justify-content-center">
-          <table className="table-bordered">
-            <tbody>
-              <tr style={{ backgroundColor: "rgba(255, 177, 12, 0.6)" }}>
-                <td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td>
-              </tr>
-              <tr>
-                <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
-              </tr>
-              <tr style={{ backgroundColor: "rgba(255, 177, 12, 0.6)" }}>
-                <td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td>
-              </tr>
-              <tr>
-                <td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
         {/* Sequência de letras com binários */}
@@ -163,12 +190,49 @@ function Game() {
           </div>
         </div>
 
-        {/* Botão de controle de jogo */}
+        {/* Próxima palavra*/}
         <div className="mt-4">
           <button className="btn btn-primary" onClick={carregarNovaPalavra}>
-            {jogoFinalizado ? "Próxima palavra" : "Tentar outra palavra"}
+             Próxima palavra
           </button>
         </div>
+
+        {/* Botão de cancelar tentativa */}
+        <div className="mt-3">
+          <button className="btn btn-danger" onClick={resetarTentativa}>Cancelar tentativa</button>
+        </div>
+
+        {/* Progresso das fases */}
+        <div className="d-flex justify-content-center mt-4">
+          {progressoFases.map((concluida, index) => (
+            <div
+              key={index}
+              className={`fase-icon ${concluida ? "concluida" : "pendente"}`}
+              style={{
+                width: "30px",
+                height: "30px",
+                margin: "0 10px",
+                borderRadius: "50%",
+                backgroundColor: concluida ? "green" : "gray",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Modal de parabéns */}
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Parabéns!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Você concluiu todas as 5 fases com sucesso!
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-primary" onClick={() => setShowModal(false)}>
+              Fechar
+            </button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

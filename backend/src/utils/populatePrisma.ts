@@ -3,7 +3,7 @@ import { createWord, getWords } from '../resources/palavra/palavra.services';
 const prisma = new PrismaClient();
 
 const palavras = [
-    "icomp", "ufam", "computador"
+    "icomp", "ufam", "computador", "petcomp", "binario"
 ]
 
 async function main() {
