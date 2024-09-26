@@ -25,6 +25,15 @@ function NavBar () {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link
+                    className="btn btn-warning"
+                    to="/game"
+                >
+                    JOGAR
+                </Link>
+              </li>
+              <li className="nav-item">
+                
+                <Link
                   className="nav-link"
                   to="/avaliacao"
                   style={{

@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+// This is your Prisma schema file
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
@@ -26,5 +26,18 @@ model Smeq {
   comentario String? @db.VarChar(200)
 
   @@map("smeq")
+}
+
+model Tam {
+  id    String  @id @default(uuid())
+  nomeParticipante String @db.VarChar(100)
+  easeOfUse1 String @db.VarChar(30)
+  easeOfUse2 String @db.VarChar(30)
+  easeOfUse3 String @db.VarChar(30)
+  enjoyment1 String @db.VarChar(30)
+  enjoyment2 String @db.VarChar(30)
+  enjoyment3 String @db.VarChar(30)
+  
+  @@map("tam")
 }
 

@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col, Card, Container } from 'react-bootstrap';
-import { createSmeq, createTam } from '../../services/api'; // adicionar função para enviar TAM
+import { createSmeq, createTAM } from '../../services/api';
 
 function Avaliacao() {
-  const [showSmeqModal, setShowSmeqModal] = useState(false);
   const [showTamModal, setShowTamModal] = useState(false);
-  const [score, setScore] = useState(0);
   const [nomeParticipante, setNomeParticipante] = useState('');
   const [comentario, setComentario] = useState('');
+  const [showSmeqModal, setShowSmeqModal] = useState(false);
+  const [score, setScore] = useState(0);
   const [nivelEsforco, setNivelEsforco] = useState('Nenhum esforço');
-
-  // TAM states
+  
+  // Armazena as respostas do TAM
   const [tamAnswers, setTamAnswers] = useState({
-    perceivedUsefulness: '',
-    perceivedEaseOfUse: '',
-    userSatisfaction: '',
+    easeOfUse1: '',
+    easeOfUse2: '',
+    easeOfUse3: '',
+    enjoyment1: '',
+    enjoyment2: '',
+    enjoyment3: ''
   });
 
   const handleSmeqChange = (value) => {
@@ -41,6 +44,21 @@ function Avaliacao() {
     }
   };
 
+  const handleTamChange = (e) => {
+    const { name, value } = e.target;
+    setTamAnswers((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmitTam = async () => {
+    try {
+      await createTAM({ nomeParticipante, ...tamAnswers });
+      
+    } catch (error) {
+      console.log(error);
+    }
+    setShowTamModal(false);
+  };
+
   const handleSubmitSmeq = async () => {
     try {
       await createSmeq({ nomeParticipante, score, comentario });
@@ -50,18 +68,28 @@ function Avaliacao() {
     setShowSmeqModal(false);
   };
 
-  const handleSubmitTam = async () => {
-    try {
-      await createTam({ nomeParticipante, ...tamAnswers });
-    } catch (error) {
-      console.log(error);
-    }
-    setShowTamModal(false);
-  };
+  const radioOptions = [
+    'Discordo totalmente',
+    'Discordo fortemente',
+    'Discordo parcialmente',
+    'Nem concordo nem discordo',
+    'Concordo parcialmente',
+    'Concordo fortemente',
+    'Concordo totalmente',
+  ];
 
-  const handleTamChange = (e) => {
-    const { name, value } = e.target;
-    setTamAnswers((prev) => ({ ...prev, [name]: value }));
+  const renderRadioButtons = (questionName) => {
+    return radioOptions.map((option, index) => (
+      <Form.Check
+        key={`${questionName}-${index}`}
+        type="radio"
+        label={option}
+        name={questionName}
+        value={option}
+        onChange={handleTamChange}
+        inline
+      />
+    ));
   };
 
   return (
@@ -84,12 +112,11 @@ function Avaliacao() {
       <Row className="mt-4">
         {/* Card SMEQ */}
         <Col md={6}>
-          <Card className="mb-4">
-            <Card.Img variant="top" src="smeq_image.jpg" alt="SMEQ" />
+          <Card className="mb-4 h-100">
+            <Card.Img variant="top" src="smeqImage.jpg" alt="SMEQ" />
             <Card.Body>
-              <Card.Title>SMEQ</Card.Title>
               <Card.Text>
-                A Técnica SMEQ (Subjective Mental Effort Questionnaire) é utilizada para medir o esforço mental percebido pelo usuário durante a interação com o sistema.
+                Avalie o esforço mental percebido durante a interação com o sistema.
               </Card.Text>
               <Button variant="primary" onClick={() => setShowSmeqModal(true)}>
                 Responder SMEQ
@@ -97,15 +124,14 @@ function Avaliacao() {
             </Card.Body>
           </Card>
         </Col>
-
+        
         {/* Card TAM */}
         <Col md={6}>
-          <Card className="mb-4">
-            <Card.Img variant="top" src="placeholder_image_tam.jpg" alt="TAM" />
+          <Card className="mb-4 h-100">
+            <Card.Img variant="top" src="tamImage.jpg" alt="TAM" />
             <Card.Body>
-              <Card.Title>TAM</Card.Title>
               <Card.Text>
-                O Questionário TAM (Technology Acceptance Model) é utilizado para avaliar a aceitação da tecnologia pelo usuário, medindo fatores como facilidade de uso e utilidade percebida.
+                Avalie a facilidade de uso e o prazer percebido ao utilizar o sistema Binary Game.
               </Card.Text>
               <Button variant="primary" onClick={() => setShowTamModal(true)}>
                 Responder TAM
@@ -113,7 +139,6 @@ function Avaliacao() {
             </Card.Body>
           </Card>
         </Col>
-
         {/* Modal SMEQ */}
         <Modal show={showSmeqModal} onHide={() => setShowSmeqModal(false)}>
           <Modal.Header closeButton>
@@ -160,46 +185,60 @@ function Avaliacao() {
         </Modal>
 
         {/* Modal TAM */}
-        <Modal show={showTamModal} onHide={() => setShowTamModal(false)}>
+        <Modal show={showTamModal} onHide={() => setShowTamModal(false)} size='lg'>
           <Modal.Header closeButton>
             <Modal.Title>Responder TAM</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body >
             <Form>
+              {/* Facilidade de Uso Percebida */}
+              <h5>Facilidade de Uso Percebida</h5>
+
+              {/* Pergunta 1 */}
               <Form.Group>
-                <Form.Label>Utilidade Percebida</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={2}
-                  name="perceivedUsefulness"
-                  value={tamAnswers.perceivedUsefulness}
-                  onChange={handleTamChange}
-                  placeholder="Descreva a utilidade percebida da aplicação"
-                />
+                <Form.Label>Minha interação com o Binary Game foi clara e compreensível.</Form.Label>
+                <br></br>
+                {renderRadioButtons('easeOfUse1')}
               </Form.Group>
 
+              {/* Pergunta 2 */}
               <Form.Group className="mt-3">
-                <Form.Label>Facilidade de Uso Percebida</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={2}
-                  name="perceivedEaseOfUse"
-                  value={tamAnswers.perceivedEaseOfUse}
-                  onChange={handleTamChange}
-                  placeholder="Descreva a facilidade de uso percebida da aplicação"
-                />
+                <Form.Label>Interagir com o Binary Game não exigiu muito do meu esforço mental.</Form.Label>
+                <br></br>
+                {renderRadioButtons('easeOfUse2')}
               </Form.Group>
 
+              {/* Pergunta 3 */}
               <Form.Group className="mt-3">
-                <Form.Label>Satisfação do Usuário</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={2}
-                  name="userSatisfaction"
-                  value={tamAnswers.userSatisfaction}
-                  onChange={handleTamChange}
-                  placeholder="Descreva sua satisfação com a aplicação"
-                />
+                <Form.Label>Considero fácil utilizar o Binary Game.</Form.Label>
+                <br></br>
+                {renderRadioButtons('easeOfUse3')}
+              </Form.Group>
+
+              <hr />
+
+              {/* Prazer Percebido */}
+              <h5>Prazer Percebido</h5>
+
+              {/* Pergunta 1 */}
+              <Form.Group>
+                <Form.Label>Acho que usar o Binary Game é agradável.</Form.Label>
+                <br></br>
+                {renderRadioButtons('enjoyment1')}
+              </Form.Group>
+
+              {/* Pergunta 2 */}
+              <Form.Group className="mt-3">
+                <Form.Label>O processo real de utilização do Binary Game é agradável.</Form.Label>
+                <br></br>
+                {renderRadioButtons('enjoyment2')}
+              </Form.Group>
+
+              {/* Pergunta 3 */}
+              <Form.Group className="mt-3">
+                <Form.Label>Eu me divirto usando o Binary Game.</Form.Label>
+                <br></br>
+                {renderRadioButtons('enjoyment3')}
               </Form.Group>
             </Form>
           </Modal.Body>
