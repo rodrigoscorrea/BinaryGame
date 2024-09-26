@@ -9,8 +9,8 @@ function LandingPage() {
                 {/* Explicação e cabeçalho */}
                 <div className="row">
                     <div className="col mt-5">
-                        <h1 className="display-4 text-light">Descubra o Mundo dos Números Binários!</h1>
-                        <p className="lead mt-3 text-light">
+                        <h1 className="display-4 text-light" style={{fontSize: "3em", fontWeight: "bold"}}>Descubra o Mundo dos Números Binários!</h1>
+                        <p className="lead mt-3 text-light" style={{fontSize: "1.5em",fontWeight: "bold"}}>
                             Explore, aprenda e divirta-se com o poder do sistema binário.
                             Você consegue converter números e resolver desafios? Vamos ver!
                         </p>
@@ -19,7 +19,7 @@ function LandingPage() {
 
                 {/* Link para mais informações */}
                 <div className="row">
-                    <div className="col mt-5">
+                    <div className="col mt-5" style={{fontSize: "1.5em",fontWeight: "bold"}}>
                         <p className="text-light">Curioso sobre o que são números binários?</p>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ function LandingPage() {
                 {/* Botão de jogar */}
                 <div className="row">
                     <div className="col">
-                        <Link className="btn btn-warning btn-lg mt-4" to={"/game"}>
+                        <Link className="btn btn-warning btn-lg mt-4" to={"/game"} style={{fontSize: "1.5em",fontWeight: "bold"}}>
                             Jogue agora e aprenda brincando!
                         </Link>
                     </div>

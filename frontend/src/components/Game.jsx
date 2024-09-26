@@ -102,8 +102,8 @@ function Game() {
     <div className="mt-3">
       <div className="mx-3">
         {/* Título e objetivo do jogo */}
-        <h3>Objetivo do jogo</h3>
-        <p>
+        <h3 style={{fontSize: "2em"}}>Objetivo do jogo</h3>
+        <p className="mt-4" style={{fontSize: "1.5em"}}>
           O objetivo do jogo é adivinhar a palavra secreta, convertendo as letras de uma palavra aleatória para o código binário correspondente. 
           Cada letra tem seu próprio valor binário de 5 bits. Preencha os campos com as letras corretas para completar a palavra.
         </p>
@@ -113,7 +113,7 @@ function Game() {
 
         {/* Tabela de letras e números */}
         <div className="row justify-content-center">
-          <table className="table-bordered">
+          <table className="table-bordered" style={{fontSize: "1.5em"}}>
             <tbody>
               <tr style={{ backgroundColor: "rgba(255, 177, 12, 0.6)" }}>
                 <td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td>
@@ -145,7 +145,7 @@ function Game() {
                 <h5 className="modal-title" id="helpModalLabel">Ajuda para o Jogo</h5>
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body" style={{fontSize: "1.25em"}}>
                 <h5>Como converter um número binário para decimal?</h5>
                 <p>
                   Imagine que o sistema binário é como um jogo de luzes, onde cada luz pode estar ligada ou desligada. 
@@ -181,7 +181,7 @@ function Game() {
                       maxLength={1}
                       onChange={(e) => handleInputChange(index, e.target.value)}
                       value={respostaUsuario[index] || ""}
-                      style={{ width: "40px", textAlign: "center" }}
+                      style={{ width: "50px", textAlign: "center" }}
                     />
                   ))}
                 </div>
@@ -189,7 +189,7 @@ function Game() {
                 <div className="d-flex justify-content-around">
                   {palavraBinario.map((item, index) => (
                     <div key={index}>
-                      <p>{item.binario}</p>
+                      <p style={{fontSize: "1.5em"}}>{item.binario}</p>
                     </div>
                   ))}
                 </div>
@@ -207,21 +207,21 @@ function Game() {
 
         <div className="d-flex justify-content-center">
           {/* Próxima palavra*/}
-          <div className="mt-4">
-            <button className="btn btn-primary" onClick={carregarNovaPalavra}>
+          <div className="mt-4 mb-4">
+            <button className="btn btn-primary" onClick={carregarNovaPalavra} style={{fontSize: "1.5em"}}>
               Próxima palavra
             </button>
           </div>
 
           {/* Botão de cancelar tentativa */}
-          <div className="mt-4" style={{marginLeft: "15px"}}>
-            <button className="btn btn-danger" onClick={resetarTentativa}>Cancelar tentativa</button>
+          <div className="mt-4 mb-4" style={{marginLeft: "15px"}}>
+            <button className="btn btn-danger" onClick={resetarTentativa} style={{fontSize: "1.5em"}}>Cancelar tentativa</button>
           </div>
         </div>
         
 
         {/* Progresso das fases */}
-        <div className="d-flex justify-content-center mt-4">
+        <div className="d-flex justify-content-center mt-5 mb-5">
           {progressoFases.map((concluida, index) => (
             <div
               key={index}

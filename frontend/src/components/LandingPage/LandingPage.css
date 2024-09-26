@@ -1,7 +1,7 @@
 .landing-page-container {
     position: relative;
     height: 100vh; /* Ocupa toda a altura da página */
-    background-image: url('../../../public/images.jpeg'); /* Use o caminho correto para sua imagem */
+    background-image: url('../../../public/11824.jpg'); /* Use o caminho correto para sua imagem */
     background-size: cover;
     background-position: center;
     display: flex;

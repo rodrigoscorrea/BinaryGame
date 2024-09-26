@@ -94,13 +94,13 @@ function Avaliacao() {
 
   return (
     <Container className="my-5">
-      <h3 className="text-center">Avaliação</h3>
-      <p className="text-center">
+      <h3 className="text-center" style={{ fontSize: '2.5em' }}>Avaliação</h3>
+      <p className="text-center" style={{ fontSize: '1.5em' }}>
         Agradecemos sua colaboração em nossa pesquisa. Por favor, insira seu nome e escolha uma das técnicas abaixo para prosseguir.
       </p>
 
       <Form.Group className="mb-3">
-        <Form.Label>Nome</Form.Label>
+        <Form.Label style={{ fontSize: '1.5rem' }}>Nome</Form.Label>
         <Form.Control
           type="text"
           value={nomeParticipante}
@@ -115,10 +115,10 @@ function Avaliacao() {
           <Card className="mb-4 h-100">
             <Card.Img variant="top" src="smeqImage.jpg" alt="SMEQ" />
             <Card.Body>
-              <Card.Text>
+              <Card.Text style={{ fontSize: '1.5rem' }}>
                 Avalie o esforço mental percebido durante a interação com o sistema.
               </Card.Text>
-              <Button variant="primary" onClick={() => setShowSmeqModal(true)}>
+              <Button variant="primary" onClick={() => setShowSmeqModal(true)} style={{ fontSize: '1.5rem' }}>
                 Responder SMEQ
               </Button>
             </Card.Body>
@@ -130,10 +130,10 @@ function Avaliacao() {
           <Card className="mb-4 h-100">
             <Card.Img variant="top" src="tamImage.jpg" alt="TAM" />
             <Card.Body>
-              <Card.Text>
+              <Card.Text style={{ fontSize: '1.5rem' }}>
                 Avalie a facilidade de uso e o prazer percebido ao utilizar o sistema Binary Game.
               </Card.Text>
-              <Button variant="primary" onClick={() => setShowTamModal(true)}>
+              <Button variant="primary" onClick={() => setShowTamModal(true)} style={{ fontSize: '1.5rem' }}>
                 Responder TAM
               </Button>
             </Card.Body>
