@@ -19,8 +19,19 @@ function Game() {
   const carregarNovaPalavra = () => {
     getPalavras().then((response) => {
       setPalavras(response);
-      setPalavraAleatoria(response[indexPalavra].palavra);
-      setIndexPalavra(indexPalavra + 1);
+
+      console.log("indice da palavra ", indexPalavra);
+      console.log("palavra: ", response[indexPalavra]);
+
+      
+      if(indexPalavra < 4){
+        setPalavraAleatoria(response[indexPalavra].palavra);
+        setIndexPalavra(indexPalavra + 1);
+      } else if (indexPalavra === 4){
+        setPalavraAleatoria(response[indexPalavra].palavra);
+        setIndexPalavra(0);
+      }
+      
       setRespostaUsuario([]); // Limpa a resposta do usuário
       setMensagem(""); // Reseta a mensagem
       setJogoFinalizado(false); // Reseta o status do jogo
@@ -66,10 +77,12 @@ function Game() {
 
       // Avança para a próxima fase
       setFaseAtual(faseAtual + 1);
-
+      console.log("fase atual: ", faseAtual)
       // Se todas as fases foram concluídas, exibe o modal de parabéns
+      
       if (faseAtual === 4) {
         setIndexPalavra(0);
+        setJogoFinalizado(true);
         setShowModal(true);
         resetarTentativa();
         
@@ -190,17 +203,22 @@ function Game() {
           </div>
         </div>
 
-        {/* Próxima palavra*/}
-        <div className="mt-4">
-          <button className="btn btn-primary" onClick={carregarNovaPalavra}>
-             Próxima palavra
-          </button>
-        </div>
+        
 
-        {/* Botão de cancelar tentativa */}
-        <div className="mt-3">
-          <button className="btn btn-danger" onClick={resetarTentativa}>Cancelar tentativa</button>
+        <div className="d-flex justify-content-center">
+          {/* Próxima palavra*/}
+          <div className="mt-4">
+            <button className="btn btn-primary" onClick={carregarNovaPalavra}>
+              Próxima palavra
+            </button>
+          </div>
+
+          {/* Botão de cancelar tentativa */}
+          <div className="mt-4" style={{marginLeft: "15px"}}>
+            <button className="btn btn-danger" onClick={resetarTentativa}>Cancelar tentativa</button>
+          </div>
         </div>
+        
 
         {/* Progresso das fases */}
         <div className="d-flex justify-content-center mt-4">
