@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col, Card, Container } from 'react-bootstrap';
 import { createSmeq, createTAM } from '../../services/api';
+import CustomModalSucesso from '../CustomModalSucesso';
 
 function Avaliacao() {
   const [showTamModal, setShowTamModal] = useState(false);
@@ -9,7 +10,7 @@ function Avaliacao() {
   const [showSmeqModal, setShowSmeqModal] = useState(false);
   const [score, setScore] = useState(0);
   const [nivelEsforco, setNivelEsforco] = useState('Nenhum esforço');
-  
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   // Armazena as respostas do TAM
   const [tamAnswers, setTamAnswers] = useState({
     easeOfUse1: '',
@@ -57,6 +58,8 @@ function Avaliacao() {
       console.log(error);
     }
     setShowTamModal(false);
+    setShowSuccessModal(true); 
+   
   };
 
   const handleSubmitSmeq = async () => {
@@ -66,6 +69,8 @@ function Avaliacao() {
       console.log(error);
     }
     setShowSmeqModal(false);
+    setShowSuccessModal(true);
+   
   };
 
   const radioOptions = [
@@ -106,6 +111,7 @@ function Avaliacao() {
           value={nomeParticipante}
           onChange={(e) => setNomeParticipante(e.target.value)}
           placeholder="Digite seu nome"
+          required
         />
       </Form.Group>
 
@@ -249,9 +255,14 @@ function Avaliacao() {
             <Button variant="primary" onClick={handleSubmitTam}>
               Enviar Resposta
             </Button>
+            
           </Modal.Footer>
         </Modal>
       </Row>
+      <CustomModalSucesso 
+        open={showSuccessModal}
+        handleClose={() => setShowSuccessModal(false)} 
+      />
     </Container>
   );
 }

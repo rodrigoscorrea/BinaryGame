@@ -6,7 +6,7 @@ function NavBar () {
         <div className="container-fluid">
           <div className="navbar-brand">
             <Link to="/" style={{ color: "white", textDecoration: "none", fontSize: "1.5em"}}>
-              Binary Game <i className="bi bi-graph-up-arrow"></i>
+              Binary Game <i className="bi bi-file-binary"></i>
             </Link>
           </div>
           <button

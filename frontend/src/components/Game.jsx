@@ -19,10 +19,6 @@ function Game() {
   const carregarNovaPalavra = () => {
     getPalavras().then((response) => {
       setPalavras(response);
-
-      console.log("indice da palavra ", indexPalavra);
-      console.log("palavra: ", response[indexPalavra]);
-
       
       if(indexPalavra < 4){
         setPalavraAleatoria(response[indexPalavra].palavra);
@@ -133,8 +129,8 @@ function Game() {
 
         {/* Modal de ajuda */}
         <div className="d-flex justify-content-end">
-          <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#helpModal">
-            <i className="bi bi-question-circle-fill" style={{ fontSize: '1.5rem' }}></i>
+          <button type="button" className="btn btn-link" data-bs-toggle="modal" data-bs-target="#helpModal" style={{ fontSize: '1.5rem', textDecoration: "none" }}>
+            Ajuda <i className="bi bi-question-circle-fill" style={{ fontSize: '1.5rem' }}></i>
           </button>
         </div>
 
