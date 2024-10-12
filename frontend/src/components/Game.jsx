@@ -13,6 +13,7 @@ function Game() {
   const [showModal, setShowModal] = useState(false);
   const [indexPalavra, setIndexPalavra] = useState(0);
   const [erros, setErros] = useState([]);
+  const [jogoIniciado, setJogoIniciado] = useState(false);
 
   useEffect(() => {
     carregarNovaPalavra();
@@ -127,8 +128,20 @@ function Game() {
     carregarNovaPalavra(); // Carrega uma nova palavra
   };
 
+  const iniciarJogo = () => {
+    
+    setJogoIniciado(!jogoIniciado);
+    if(jogoIniciado) {carregarNovaPalavra()} else {
+      setFaseAtual(0); // Reseta a fase atual
+      setProgressoFases([false, false, false, false, false]);
+    }; // Carrega a primeira palavra ao iniciar
+  };
+
   return (
     <div className="mt-3">
+
+
+
       <div className="mx-3">
         {/* Título e objetivo do jogo */}
         <h3 style={{fontSize: "2em"}}>Objetivo do jogo</h3>
@@ -197,81 +210,91 @@ function Game() {
         </div>
 
         {/* Sequência de letras com binários */}
-        <div className="row justify-content-center mt-5">
-          <div className="col text-center">
-            {palavraBinario.length > 0 ? (
-              <div>
-                {/* Inputs para o usuário digitar a palavra */}
-                <div className="d-flex justify-content-around mt-3">
-                  {palavraAleatoria.split("").map((_, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      maxLength={1}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
-                      value={respostaUsuario[index] || ""}
-                      style={{ width: "50px", textAlign: "center" }}
-                    />
-                  ))}
-                </div>
-
-                <div className="d-flex justify-content-around">
-                  {palavraBinario.map((item, index) => (
-                    <div key={index}>
-                      <p 
-                        style={{
-                          fontSize: "1.5em",
-                          color: erros.includes(index) ? "red" : "black"
-                        }}
-                      >
-                        {item.binario}
-                      </p>
+        {jogoIniciado ? (
+            <div className="row justify-content-center mt-5">
+              <div className="col text-center">
+                {palavraBinario.length > 0 ? (
+                  <div>
+                    {/* Inputs para o usuário digitar a palavra */}
+                    <div className="d-flex justify-content-around mt-3">
+                      {palavraAleatoria.split("").map((_, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          maxLength={1}
+                          onChange={(e) => handleInputChange(index, e.target.value)}
+                          value={respostaUsuario[index] || ""}
+                          style={{ width: "50px", textAlign: "center" }}
+                        />
+                      ))}
                     </div>
-                  ))}
+
+                    <div className="d-flex justify-content-around">
+                      {palavraBinario.map((item, index) => (
+                        <div key={index}>
+                          <p 
+                            style={{
+                              fontSize: "1.5em",
+                              color: erros.includes(index) ? "red" : "black"
+                            }}
+                          >
+                            {item.binario}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Exibir mensagem de acerto ou erro */}
+                    {mensagem && <div className="mt-3"><strong>{mensagem}</strong></div>}
+                  </div>
+                ) : (
+                  <p>Carregando palavra...</p>
+                )}
+              </div>
+              <div className="d-flex justify-content-center">
+                {/* Próxima palavra*/}
+                <div className="mt-4 mb-4">
+                  <button className="btn btn-primary" onClick={carregarNovaPalavra} style={{fontSize: "1.5em"}}>
+                    Próxima palavra
+                  </button>
                 </div>
 
-                {/* Exibir mensagem de acerto ou erro */}
-                {mensagem && <div className="mt-3"><strong>{mensagem}</strong></div>}
+                {/* Botão de cancelar tentativa */}
+                <div className="mt-4 mb-4" style={{marginLeft: "15px"}}>
+                  <button className="btn btn-danger" onClick={iniciarJogo} style={{fontSize: "1.5em"}}>Cancelar tentativa</button>
+                </div>
               </div>
-            ) : (
-              <p>Carregando palavra...</p>
-            )}
-          </div>
-        </div>
+              
 
-        
-
-        <div className="d-flex justify-content-center">
-          {/* Próxima palavra*/}
-          <div className="mt-4 mb-4">
-            <button className="btn btn-primary" onClick={carregarNovaPalavra} style={{fontSize: "1.5em"}}>
-              Próxima palavra
+              {/* Progresso das fases */}
+              <div className="d-flex justify-content-center mt-5 mb-5">
+                {progressoFases.map((concluida, index) => (
+                  <div
+                    key={index}
+                    className={`fase-icon ${concluida ? "concluida" : "pendente"}`}
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      margin: "0 10px",
+                      borderRadius: "50%",
+                      backgroundColor: concluida ? "green" : "gray",
+                    }}
+                  />
+                ))}
+              </div>  
+            </div>
+        ) : (<div className="text-center mb-3">
+          {/* Botão "START" */}
+          {!jogoIniciado && (
+            <button className="btn btn-primary btn-lg mt-5" onClick={iniciarJogo} style={{fontSize:'3em', marginBottom:'4.5em'}}>
+              START
+              <i className="bi bi-play-circle" style={{marginLeft: '10px'}}></i>
             </button>
-          </div>
-
-          {/* Botão de cancelar tentativa */}
-          <div className="mt-4 mb-4" style={{marginLeft: "15px"}}>
-            <button className="btn btn-danger" onClick={resetarTentativa} style={{fontSize: "1.5em"}}>Cancelar tentativa</button>
-          </div>
+          )}
         </div>
+      )}
+      
         
-
-        {/* Progresso das fases */}
-        <div className="d-flex justify-content-center mt-5 mb-5">
-          {progressoFases.map((concluida, index) => (
-            <div
-              key={index}
-              className={`fase-icon ${concluida ? "concluida" : "pendente"}`}
-              style={{
-                width: "30px",
-                height: "30px",
-                margin: "0 10px",
-                borderRadius: "50%",
-                backgroundColor: concluida ? "green" : "gray",
-              }}
-            />
-          ))}
-        </div>
 
         {/* Modal de parabéns */}
         <Modal show={showModal} onHide={() => setShowModal(false)}>
