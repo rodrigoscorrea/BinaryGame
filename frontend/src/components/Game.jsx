@@ -12,6 +12,8 @@ function Game() {
   const [progressoFases, setProgressoFases] = useState([false, false, false, false, false]); // Estado para acompanhar o progresso das fases
   const [showModal, setShowModal] = useState(false);
   const [indexPalavra, setIndexPalavra] = useState(0);
+  const [erros, setErros] = useState([]);
+
   useEffect(() => {
     carregarNovaPalavra();
   }, []);
@@ -31,6 +33,7 @@ function Game() {
       setRespostaUsuario([]); // Limpa a resposta do usuário
       setMensagem(""); // Reseta a mensagem
       setJogoFinalizado(false); // Reseta o status do jogo
+      setErros([]);
     });
   };
 
@@ -62,7 +65,8 @@ function Game() {
   };
 
   const verificarResposta = (resposta) => {
-    if (resposta.join("") === palavraAleatoria.toUpperCase()) {
+   
+    /* if (resposta.join("") === palavraAleatoria.toUpperCase()) {
       setMensagem("Parabéns! Você acertou!");
       setJogoFinalizado(true);
 
@@ -85,7 +89,36 @@ function Game() {
       }
     } else {
       setMensagem("Tente novamente! A palavra estava incorreta.");
-    }
+    } */
+      const novosErros = [];
+
+      resposta.forEach((letra, index) => {
+        if (letra !== palavraAleatoria[index].toUpperCase()) {
+          novosErros.push(index); // Armazena o índice das letras erradas
+        }
+      });
+  
+      setErros(novosErros);
+  
+      if (novosErros.length === 0) {
+        setMensagem("Parabéns! Você acertou!");
+        setJogoFinalizado(true);
+  
+        const novoProgresso = [...progressoFases];
+        novoProgresso[faseAtual] = true;
+        setProgressoFases(novoProgresso);
+  
+        setFaseAtual(faseAtual + 1);
+  
+        if (faseAtual === 4) {
+          setIndexPalavra(0);
+          setJogoFinalizado(true);
+          setShowModal(true);
+          resetarTentativa();
+        }
+      } else {
+        setMensagem("Tente novamente! A palavra estava incorreta.");
+      }
   };
 
   const resetarTentativa = () => {
@@ -185,7 +218,14 @@ function Game() {
                 <div className="d-flex justify-content-around">
                   {palavraBinario.map((item, index) => (
                     <div key={index}>
-                      <p style={{fontSize: "1.5em"}}>{item.binario}</p>
+                      <p 
+                        style={{
+                          fontSize: "1.5em",
+                          color: erros.includes(index) ? "red" : "black"
+                        }}
+                      >
+                        {item.binario}
+                      </p>
                     </div>
                   ))}
                 </div>
