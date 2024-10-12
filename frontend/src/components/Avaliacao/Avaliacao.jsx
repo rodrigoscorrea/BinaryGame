@@ -47,7 +47,10 @@ function Avaliacao() {
 
   const handleTamChange = (e) => {
     const { name, value } = e.target;
-    setTamAnswers((prev) => ({ ...prev, [name]: value }));
+    setTamAnswers((prev) => {
+      const newAnswers =  {...prev, [name]:value};
+      return newAnswers;
+    });
   };
 
   const handleSubmitTam = async () => {
