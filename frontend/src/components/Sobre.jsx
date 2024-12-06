@@ -14,7 +14,7 @@ const Sobre = () => {
         <div className="col-md-8">
           <h2 style={{ color: "#023E8A" }}>Objetivo</h2>
           <p style={{ fontSize: "1.5em" }}>
-            O Binary Game é um projeto de gameficado de uma atividade aplicada pelo Pet de Computação
+            O Binary Word é um projeto de gameficado de uma atividade aplicada pelo Pet de Computação
             para os calouros do Instituto de Computação na Universidade Federal do Amazonas. A atividade
             descontraída serve para instigar os alunos a explorarem conceitos computacionais, no caso, dos
             números binários, tão importantes para a área.
@@ -50,7 +50,7 @@ const Sobre = () => {
             
           </ul>
           <h3 className="mt-4 mb-2" style={{ color: "#023E8A" }}>
-            Orientador
+            Orientadora
           </h3>
           <ul className="list-unstyled">
             <li className="d-flex align-items-center mb-3">

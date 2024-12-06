@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 
 import NavBar from './components/NavBar';
@@ -17,7 +16,7 @@ function App() {
   return (
     <>
       <Router>
-        <title>Binary Game</title>
+        <title>Binary Word</title>
         <NavBar/>
         <Routes>
           <Route path='/' element={<LandingPage/>}/>
